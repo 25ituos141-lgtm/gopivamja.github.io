@@ -3,26 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Awesome Website</title>
+<title>Super Website</title>
 
 <style>
+:root{
+    --bg:#0f2027;
+    --text:#fff;
+    --card:rgba(255,255,255,0.1);
+    --neon:#00f7ff;
+}
+
+.light{
+    --bg:#f5f5f5;
+    --text:#111;
+    --card:rgba(0,0,0,0.1);
+}
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family: Arial;
+    font-family:Arial;
+    scroll-behavior:smooth;
 }
 
-/* 🌙 Light/Dark Mode */
 body{
-    transition:0.5s;
-    color:white;
-    background:#0f2027;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
 }
 
-.dark{
-    background:#ffffff;
-    color:#000;
+/* 🌈 Animated Gradient Background */
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:linear-gradient(45deg,#00f7ff,#ff00c8,#00ff88,#ff9900);
+    background-size:400% 400%;
+    animation:bg 12s infinite;
+    z-index:-2;
+    opacity:0.2;
+}
+
+@keyframes bg{
+    0%{background-position:0%}
+    50%{background-position:100%}
+    100%{background-position:0%}
 }
 
 /* 🔝 Navbar */
@@ -30,19 +57,24 @@ nav{
     display:flex;
     justify-content:space-between;
     padding:15px 30px;
-    background:rgba(0,0,0,0.5);
     position:fixed;
     width:100%;
-    top:0;
+    backdrop-filter:blur(10px);
+    z-index:1000;
 }
 
 nav a{
-    color:white;
+    color:var(--text);
     margin:0 10px;
     text-decoration:none;
 }
 
-/* 🌟 Hero */
+/* 🌙 Toggle */
+.toggle{
+    cursor:pointer;
+}
+
+/* 🏠 Hero */
 .hero{
     height:100vh;
     display:flex;
@@ -52,20 +84,131 @@ nav a{
     text-align:center;
 }
 
-/* 🎯 Sections */
+.hero h1{
+    font-size:50px;
+    text-shadow:0 0 20px var(--neon);
+}
+
+/* 💎 Cards */
+.card{
+    background:var(--card);
+    margin:20px auto;
+    padding:25px;
+    width:90%;
+    max-width:350px;
+    border-radius:20px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 0 20px var(--neon);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:scale(1.05);
+}
+
+/* 🎬 Sections */
 section{
     padding:80px 20px;
-    text-align:center;
     opacity:0;
     transform:translateY(50px);
     transition:1s;
 }
 
-.show{
+section.show{
     opacity:1;
     transform:translateY(0);
 }
 
-/* 💎 Cards */
-.card{
-    margin:20px auto;
+/* 🔘 Button */
+.btn{
+    padding:12px 25px;
+    background:var(--neon);
+    border-radius:25px;
+    text-decoration:none;
+    color:#000;
+    margin-top:15px;
+    display:inline-block;
+}
+
+/* 🌊 Wave Footer */
+.wave{
+    position:relative;
+    height:150px;
+    background:var(--bg);
+}
+
+.wave svg{
+    position:absolute;
+    top:-100px;
+    width:100%;
+}
+
+/* 📱 Responsive */
+@media(max-width:600px){
+    .hero h1{font-size:30px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔝 Navbar -->
+<nav>
+    <h2>MySite</h2>
+    <div>
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+        <span class="toggle" onclick="toggleMode()">🌙</span>
+    </div>
+</nav>
+
+<!-- 🏠 Hero -->
+<div class="hero" id="home">
+    <h1>🔥 Welcome to My Website</h1>
+    <p>Next Level UI with animations</p>
+    <a href="#services" class="btn">Explore</a>
+</div>
+
+<!-- 📦 Services -->
+<section id="services">
+    <h2 style="text-align:center;">Services</h2>
+    <div class="card">Web Development</div>
+    <div class="card">App Development</div>
+    <div class="card">IoT Projects</div>
+</section>
+
+<!-- 📞 Contact -->
+<section id="contact">
+    <h2 style="text-align:center;">Contact</h2>
+    <div class="card">Email: your@email.com</div>
+</section>
+
+<!-- 🌊 Wave Footer -->
+<div class="wave">
+<svg viewBox="0 0 1440 320">
+<path fill="#00f7ff" fill-opacity="0.3"
+d="M0,160L60,186.7C120,213,240,267,360,261.3C480,256,600,192,720,176C840,160,960,192,1080,192C1200,192,1320,160,1380,144L1440,128V320H0Z">
+</path>
+</svg>
+</div>
+
+<script>
+// 🌙 Toggle Mode
+function toggleMode(){
+    document.body.classList.toggle("light");
+}
+
+// 🎬 Scroll Animation
+window.addEventListener("scroll",()=>{
+    document.querySelectorAll("section").forEach(sec=>{
+        let top = sec.getBoundingClientRect().top;
+        if(top < window.innerHeight - 100){
+            sec.classList.add("show");
+        }
+    });
+});
+</script>
+
+</body>
+</html>
